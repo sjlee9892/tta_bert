@@ -14,6 +14,9 @@ import math
 from utils.bert_op import pad_sequences, flat_accuracy, format_time
 
 
+now = time.localtime()
+print("Timestamp : %04d/%02d/%02d %02d:%02d:%02d (서울표준시: UCT+09:00)" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec))
+
 # 테스트 데이터 로드
 test = pd.read_csv("./data/Test.csv",
                    encoding='cp949', dtype={'rejectionContentDetail': np.str, 'label': np.int})
@@ -39,6 +42,8 @@ def get_current_enviroment():
     df.to_csv('./output/Hardware_information.csv', index=False, encoding='euc-kr')
 
     print(OS_NAME, OS_RELEASE, OS_VERSION, CPU, MEMORY, GPU)
+
+get_current_enviroment()
 
 ### 전처리_test
 sentences = test['rejectionContentDetail']
