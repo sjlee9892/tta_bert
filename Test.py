@@ -135,9 +135,8 @@ print("")
 print("Accuracy: {0:.2f}".format(eval_accuracy / nb_eval_steps))
 print("Test took: {:}".format(format_time(time.time() - t0)))
 
-final['label'] = [i[1:-1].split() for i in final['label']]
-final['logits'] = [i[1:-1].split() for i in final['logits']]
-pd.DataFrame.from_dict({'label': np.concatenate(final['label'].values), 'logits':np.concatenate(final['logits'].values)}, orient='index').transpose().to_csv('./output/Output.csv', index=False, encoding='cp949')
+# 결과 저장
+final.to_csv('./output/Output.csv',  index=False, encoding='cp949')
 
 Accuracy = pd.DataFrame({'Accuracy': [eval_accuracy / nb_eval_steps]})
 Accuracy.to_csv('./output/Accuracy.csv',
