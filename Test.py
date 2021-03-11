@@ -4,11 +4,13 @@ from transformers import BertTokenizer
 from transformers import BertForSequenceClassification
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 
+import platform
+import utils.cpuinfo as cpuinfo
+from psutil import virtual_memory
 import pandas as pd
 import numpy as np
 import time
-from bert_op import pad_sequences, flat_accuracy, format_time
-
+from utils.bert_op import pad_sequences, flat_accuracy, format_time
 
 
 # 테스트 데이터 로드
@@ -17,6 +19,25 @@ test = pd.read_csv("./data/Test.csv",
 
 # 불러올 모델 경로
 weightPath = './weight/model_state_dict_epoch_9.pt'
+
+# 테스트 하드웨어 환경 출력
+def get_current_enviroment():
+    OS_NAME = platform.system()
+    OS_RELEASE = platform.release()
+    OS_VERSION = platform.version()
+    OS = f'{OS_NAME} {OS_RELEASE} {OS_VERSION}'
+    CPU = cpuinfo.cpu.info[0]['ProcessorNameString']
+    MEMORY = virtual_memory()
+    MEMORY = f'{round(MEMORY.total / math.pow(1024,3),4)}GB'
+    GPU = torch.cuda.get_device_name(torch.cuda.current_device())
+
+    name_list = ['OS', 'CPU', 'MEMORY', 'GPU']
+    device_list = [OS, CPU, MEMORY, GPU]
+
+    df = pd.DataFrame({'Hardware':name_list, 'Hardware info':device_list}, columns=['Hardware', 'Hardware info'])
+    df.to_csv('./output/Hardware_information.csv', index=False, encoding='euc-kr')
+
+    print(OS_NAME, OS_RELEASE, OS_VERSION, CPU, MEMORY, GPU)
 
 ### 전처리_test
 sentences = test['rejectionContentDetail']

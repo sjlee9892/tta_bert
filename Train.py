@@ -12,7 +12,7 @@ import random
 import time
 import datetime
 import os
-from bert_op import pad_sequences, flat_accuracy, format_time
+from utils.bert_op import pad_sequences, flat_accuracy, format_time
 
 
 

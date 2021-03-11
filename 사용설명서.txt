@@ -42,8 +42,10 @@ python 3.6
  - tqdm==4.50.2
  - transformers==3.4.0
  - urllib3==1.25.11
+ - psutil
 
-Test.py 실행 시 "./output/"에 Accuracy.csv, Output.csv가 생성됨
+Test.py 실행 시 "./output/"에 Hardware_information.csv, Accuracy.csv, Output.csv가 생성됨
 
+- Hardware_information.csv => 테스트 환경에 대한 정보
 - Accuracy.csv => 테스트 데이터에 대한 분류 정확도
 - Output.csv => 실제 라벨값과 모델 분류 예측값
